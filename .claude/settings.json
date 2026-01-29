@@ -1,0 +1,44 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"$CLAUDE_PROJECT_DIR/reference/trace-hook.ts\""
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"$CLAUDE_PROJECT_DIR/reference/trace-hook.ts\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"$CLAUDE_PROJECT_DIR/reference/trace-hook.ts\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"$CLAUDE_PROJECT_DIR/reference/trace-hook.ts\""
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.DS_Store
+.vercel
+
+# Agent Trace data (local traces, not committed)
+.agent-trace/

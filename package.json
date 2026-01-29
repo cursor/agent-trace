@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "scripts": {
+    "build": "bun run index.ts",
+    "dev": "bun run index.ts --dev"
+  },
+  "dependencies": {
+    "marked": "^15.0.0",
+    "marked-shiki": "^1.2.0",
+    "shiki": "^3.0.0",
+    "zod": "^3.24.0",
+    "zod-to-json-schema": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "bun run reference/trace-hook.ts"
+      }
+    ],
+    "sessionEnd": [
+      {
+        "command": "bun run reference/trace-hook.ts"
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "bun run reference/trace-hook.ts"
+      }
+    ],
+    "afterTabFileEdit": [
+      {
+        "command": "bun run reference/trace-hook.ts"
+      }
+    ],
+    "afterShellExecution": [
+      {
+        "command": "bun run reference/trace-hook.ts"
+      }
+    ]
+  }
+}
