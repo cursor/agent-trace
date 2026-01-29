@@ -4,6 +4,7 @@ import { createHighlighter } from "shiki";
 import { watch } from "fs";
 import { join } from "path";
 import { generateJsonSchemas } from "./schemas";
+import { slugify } from "./lib/utils";
 
 const isDevMode = process.argv.includes("--dev");
 
@@ -30,14 +31,7 @@ const highlighter = await createHighlighter({
   ],
 });
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim();
-}
+// slugify imported from lib/utils.ts
 
 const imageDimensions: Record<string, { width: number; height: number }> = {
   "/assets/images/agent-trace-diagram.png": { width: 1600, height: 1290 },

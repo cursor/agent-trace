@@ -2,7 +2,8 @@
   "version": "1.0.0",
   "scripts": {
     "build": "bun run index.ts",
-    "dev": "bun run index.ts --dev"
+    "dev": "bun run index.ts --dev",
+    "test": "bun test"
   },
   "dependencies": {
     "marked": "^15.0.0",
