@@ -1,48 +1,19 @@
 import { execFileSync } from "child_process";
 import { existsSync, mkdirSync, appendFileSync, readFileSync } from "fs";
 import { join, relative } from "path";
+import type {
+  ContributorType,
+  Conversation,
+  File as FileEntry,
+  Range,
+  Tool,
+  TraceRecord,
+  Vcs,
+  VcsType,
+} from "../schemas";
 
-export interface Range {
-  start_line: number;
-  end_line: number;
-  content_hash?: string;
-  contributor?: {
-    type: "human" | "ai" | "mixed" | "unknown";
-    model_id?: string;
-  };
-}
-
-export interface Conversation {
-  url?: string;
-  contributor?: {
-    type: "human" | "ai" | "mixed" | "unknown";
-    model_id?: string;
-  };
-  ranges: Range[];
-  related?: { type: string; url: string }[];
-}
-
-export interface FileEntry {
-  path: string;
-  conversations: Conversation[];
-}
-
-export type VcsType = "git" | "jj" | "hg" | "svn";
-
-export interface Vcs {
-  type: VcsType;
-  revision: string;
-}
-
-export interface TraceRecord {
-  version: string;
-  id: string;
-  timestamp: string;
-  vcs?: Vcs;
-  tool?: { name: string; version?: string };
-  files: FileEntry[];
-  metadata?: Record<string, unknown>;
-}
+// Re-export schema types for consumers
+export type { ContributorType, Conversation, FileEntry, Range, Tool, TraceRecord, Vcs, VcsType };
 
 export interface FileEdit {
   old_string: string;
@@ -59,7 +30,7 @@ export function getWorkspaceRoot(): string {
     ?? process.cwd();
 }
 
-export function getToolInfo(): { name: string; version?: string } {
+export function getToolInfo(): Tool {
   if (process.env.CURSOR_VERSION) return { name: "cursor", version: process.env.CURSOR_VERSION };
   if (process.env.CLAUDE_PROJECT_DIR) return { name: "claude-code" };
   return { name: "unknown" };
@@ -120,8 +91,6 @@ export function computeRangePositions(edits: FileEdit[], fileContent?: string): 
       return { start_line: 1, end_line: lineCount };
     });
 }
-
-export type ContributorType = "human" | "ai" | "mixed" | "unknown";
 
 export function createTrace(
   type: ContributorType,

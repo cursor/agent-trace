@@ -12,7 +12,7 @@ export const ContributorTypeSchema = z.enum([
 
 export const ToolSchema = z.object({
   name: z.string().describe("Name of the tool that produced the code"),
-  version: z.string().describe("Version of the tool"),
+  version: z.string().optional().describe("Version of the tool"),
 });
 
 export const ContributorSchema = z.object({
