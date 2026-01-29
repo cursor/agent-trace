@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 
 const SCHEMA_BASE_URL = "https://agent-trace.dev/schemas/v1";
 
@@ -111,13 +110,11 @@ export const TraceRecordSchema = z.object({
 export function generateJsonSchemas(): Record<string, object> {
   const schemas: Record<string, object> = {};
 
-  // Trace Record Schema
   schemas["trace-record.json"] = {
-    ...zodToJsonSchema(TraceRecordSchema, {
-      name: "TraceRecord",
-      $refStrategy: "none",
+    ...z.toJSONSchema(TraceRecordSchema, {
+      reused: "inline",
+      target: "draft-2020-12",
     }),
-    $schema: "https://json-schema.org/draft/2020-12/schema",
     $id: `${SCHEMA_BASE_URL}/trace-record.json`,
     title: "Agent Trace Record",
   };
