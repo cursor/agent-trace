@@ -541,6 +541,7 @@ This specification is released under [CC BY 4.0](https://creativecommons.org/lic
 Thanks to the following partners for helping shape Agent Trace:
 
 - [Amp](https://ampcode.com)
+- [Amplitude](https://x.com/spenserskates/status/2017062645518782474)
 - [Cloudflare](https://cloudflare.com)
 - [Cognition](https://cognition.ai)
 - [git-ai](https://github.com/git-ai-project/git-ai)
