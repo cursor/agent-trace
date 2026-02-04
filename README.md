@@ -89,8 +89,8 @@ The fundamental unit of Agent Trace is the **Trace Record**:
   "properties": {
     "version": {
       "type": "string",
-      "pattern": "^[0-9]+\\.[0-9]+$",
-      "description": "Agent Trace specification version (e.g., '1.0')"
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Agent Trace specification version (e.g., '1.0.0')"
     },
     "id": {
       "type": "string",
