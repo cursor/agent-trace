@@ -86,7 +86,7 @@ export const VcsSchema = z.object({
 export const TraceRecordSchema = z.object({
   version: z
     .string()
-    .regex(/^[0-9]+\.[0-9]+$/)
+    .regex(/^[0-9]+\\.[0-9]+\\.[0-9]+$/)
     .describe("Agent Trace specification version (e.g., '1.0')"),
   id: z.string().uuid().describe("Unique identifier for this trace record"),
   timestamp: z
