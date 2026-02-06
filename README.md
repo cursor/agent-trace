@@ -6,7 +6,7 @@
 
 ## Abstract
 
-Agent Trace is an open specification for tracking AI-generated code. It provides a vendor-neutral format for recording AI contributions alongside human authorship in version-controlled codebases.
+Agent Trace is an open specification for tracing AI-generated code. It provides a vendor-neutral format for recording AI contributions alongside human authorship in version-controlled codebases.
 
 ## Table of Contents
 
