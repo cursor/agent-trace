@@ -1,11 +1,23 @@
 #!/usr/bin/env bun
 
+/**
+ * Agent Trace Hook Handler
+ *
+ * This script processes hook events from AI coding tools (Cursor, Claude Code)
+ * and generates trace records for attribution tracking. It reads JSON input
+ * from stdin and dispatches to the appropriate handler based on hook_event_name.
+ *
+ * Supported tools:
+ * - Cursor: afterFileEdit, afterTabFileEdit, afterShellExecution, sessionStart, sessionEnd
+ * - Claude Code: PostToolUse, SessionStart, SessionEnd
+ */
+
 import {
   createTrace,
   appendTrace,
   computeRangePositions,
   tryReadFile,
-  type ContributorType,
+  extractModelFromTranscript,
   type FileEdit,
 } from "./trace-store";
 
@@ -30,6 +42,25 @@ interface HookInput {
   tool_use_id?: string;
   source?: string;
   cwd?: string;
+}
+
+/**
+ * Resolves the model identifier from hook input.
+ *
+ * Different tools provide model information differently:
+ * - Cursor: Sends model directly in the hook payload via `input.model`
+ * - Claude Code: Does not include model in payload; must be extracted from transcript
+ *
+ * This function handles both cases transparently.
+ */
+function resolveModel(input: HookInput): string | undefined {
+  if (input.model) {
+    return input.model;
+  }
+  if (input.transcript_path) {
+    return extractModelFromTranscript(input.transcript_path);
+  }
+  return undefined;
 }
 
 const handlers: Record<string, (input: HookInput) => void> = {
@@ -108,7 +139,7 @@ const handlers: Record<string, (input: HookInput) => void> = {
       : undefined;
 
     appendTrace(createTrace("ai", file, {
-      model: input.model,
+      model: resolveModel(input),
       rangePositions,
       transcript: input.transcript_path,
       metadata: {
@@ -122,14 +153,14 @@ const handlers: Record<string, (input: HookInput) => void> = {
 
   SessionStart: (input) => {
     appendTrace(createTrace("ai", ".sessions", {
-      model: input.model,
+      model: resolveModel(input),
       metadata: { event: "session_start", session_id: input.session_id, source: input.source },
     }));
   },
 
   SessionEnd: (input) => {
     appendTrace(createTrace("ai", ".sessions", {
-      model: input.model,
+      model: resolveModel(input),
       metadata: { event: "session_end", session_id: input.session_id, reason: input.reason },
     }));
   },
